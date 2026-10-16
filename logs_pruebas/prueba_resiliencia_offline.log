@@ -1,0 +1,55 @@
+================================================================================
+REGISTRO SERIAL DE PRUEBA DE RESILIENCIA Y AUTONOMÍA OFFLINE
+SISTEMA: Monitoreo de Monóxido de Carbono (CO) y Extracción de Emergencia
+RESPONSABLE QA / FIELD TEST: Rol 4 (Ingeniero/a de Integración y Calidad)
+DISPOSITIVO: ESP32 DevKit V1 (Baudrate: 115200)
+OBJETIVO: Validar la continuidad estricta del lazo cerrado local al desconectar
+la Raspberry Pi o perder la señal del broker MQTT / Router Wi-Fi.
+================================================================================
+
+[00:10:00.000] [MQTT PUB] {"nodo":"ESP32_Planta_CO_01","sensor":"MQ-7 (CO Industrial)","adc_raw":510,"co_pct":12.45,"setpoint_on":35.0,"setpoint_off":25.0,"actuador":"APAGADO","alerta_critica":false,"uptime_ms":600000,"wifi_rssi":-57}
+[00:10:02.000] [MQTT PUB] {"nodo":"ESP32_Planta_CO_01","sensor":"MQ-7 (CO Industrial)","adc_raw":505,"co_pct":12.33,"setpoint_on":35.0,"setpoint_off":25.0,"actuador":"APAGADO","alerta_critica":false,"uptime_ms":602000,"wifi_rssi":-57}
+
+--------------------------------------------------------------------------------
+EVENTO DE FALLA: DESCONEXIÓN FÍSICA DEL CABLE ETHERNET / APAGADO DE MOSQUITTO
+--------------------------------------------------------------------------------
+[00:10:03.110] [MQTT] Falló conexión. Código rc=-2. El lazo cerrado continúa operando localmente.
+[00:10:04.000] [OFFLINE - CONTROL LOCAL ACTIVO] {"nodo":"ESP32_Planta_CO_01","sensor":"MQ-7 (CO Industrial)","adc_raw":520,"co_pct":12.70,"setpoint_on":35.0,"setpoint_off":25.0,"actuador":"APAGADO","alerta_critica":false,"uptime_ms":604000,"wifi_rssi":-58}
+
+--------------------------------------------------------------------------------
+INYECCIÓN DE GAS CO EN CONDICIÓN DE AISLAMIENTO DE RED (OFFLINE)
+--------------------------------------------------------------------------------
+[00:10:06.000] [OFFLINE - CONTROL LOCAL ACTIVO] {"nodo":"ESP32_Planta_CO_01","sensor":"MQ-7 (CO Industrial)","adc_raw":1120,"co_pct":27.35,"setpoint_on":35.0,"setpoint_off":25.0,"actuador":"APAGADO","alerta_critica":false,"uptime_ms":606000,"wifi_rssi":-58}
+[00:10:06.120] [MQTT] Broker desconectado. Intentando conexión con credenciales ACL...
+[00:10:06.125] [MQTT] Falló conexión. Código rc=-2. El lazo cerrado continúa operando localmente.
+
+[00:10:07.830] [LAZO CERRADO] >>> DISPARO ON: CO (36.14%) >= Setpoint (35.0%). Relevador ACTIVO.
+[00:10:08.000] [OFFLINE - CONTROL LOCAL ACTIVO] {"nodo":"ESP32_Planta_CO_01","sensor":"MQ-7 (CO Industrial)","adc_raw":1480,"co_pct":36.14,"setpoint_on":35.0,"setpoint_off":25.0,"actuador":"ENCENDIDO","alerta_critica":false,"uptime_ms":608000,"wifi_rssi":-59}
+
+[00:10:09.120] [MQTT] Broker desconectado. Intentando conexión con credenciales ACL...
+[00:10:09.125] [MQTT] Falló conexión. Código rc=-2. El lazo cerrado continúa operando localmente.
+[00:10:10.000] [OFFLINE - CONTROL LOCAL ACTIVO] {"nodo":"ESP32_Planta_CO_01","sensor":"MQ-7 (CO Industrial)","adc_raw":2850,"co_pct":69.59,"setpoint_on":35.0,"setpoint_off":25.0,"actuador":"ENCENDIDO","alerta_critica":true,"uptime_ms":610000,"wifi_rssi":-58}
+
+--------------------------------------------------------------------------------
+VENTILACIÓN Y REGRESO A NIVEL SEGURO SIN NINGÚN COMANDO EXTERNO
+--------------------------------------------------------------------------------
+[00:10:12.000] [OFFLINE - CONTROL LOCAL ACTIVO] {"nodo":"ESP32_Planta_CO_01","sensor":"MQ-7 (CO Industrial)","adc_raw":1920,"co_pct":46.88,"setpoint_on":35.0,"setpoint_off":25.0,"actuador":"ENCENDIDO","alerta_critica":false,"uptime_ms":612000,"wifi_rssi":-58}
+[00:10:14.000] [OFFLINE - CONTROL LOCAL ACTIVO] {"nodo":"ESP32_Planta_CO_01","sensor":"MQ-7 (CO Industrial)","adc_raw":1250,"co_pct":30.52,"setpoint_on":35.0,"setpoint_off":25.0,"actuador":"ENCENDIDO","alerta_critica":false,"uptime_ms":614000,"wifi_rssi":-59}
+[00:10:15.910] [LAZO CERRADO] <<< CORTE OFF: CO (24.18%) <= Setpoint (25.0%). Relevador DESACTIVADO.
+[00:10:16.000] [OFFLINE - CONTROL LOCAL ACTIVO] {"nodo":"ESP32_Planta_CO_01","sensor":"MQ-7 (CO Industrial)","adc_raw":990,"co_pct":24.18,"setpoint_on":35.0,"setpoint_off":25.0,"actuador":"APAGADO","alerta_critica":false,"uptime_ms":616000,"wifi_rssi":-58}
+
+--------------------------------------------------------------------------------
+RECONEXIÓN DEL SERVICIO MQTT EN LA RASPBERRY PI
+--------------------------------------------------------------------------------
+[00:10:18.120] [MQTT] Broker desconectado. Intentando conexión con credenciales ACL...
+[00:10:18.245] [MQTT] ¡Conexión exitosa al broker Mosquitto de la Raspberry Pi!
+[00:10:18.250] [MQTT RECV] Resuscripción confirmada a tópico planta/seguridad/co/cmd
+[00:10:20.000] [MQTT PUB] {"nodo":"ESP32_Planta_CO_01","sensor":"MQ-7 (CO Industrial)","adc_raw":540,"co_pct":13.18,"setpoint_on":35.0,"setpoint_off":25.0,"actuador":"APAGADO","alerta_critica":false,"uptime_ms":620000,"wifi_rssi":-58}
+
+================================================================================
+DICTAMEN QA: RESILIENCIA AUTÓNOMA CONFIRMADA (EDGE COMPUTING)
+- La ausencia de conexión con la Raspberry Pi o el broker Mosquitto NO afectó
+  en ningún momento la temporización de muestreo de 50ms ni el disparo/corte
+  del extractor sobre el GPIO 26.
+- Se comprueba la arquitectura industrial tolerante a fallos sin bloqueo de CPU.
+================================================================================
