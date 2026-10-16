@@ -22,10 +22,10 @@
 
 | Rol Oficial Obligatorio | Responsable (Nombre Completo) | Matrícula | Módulo Técnico Asignado |
 | :--- | :--- | :--- | :--- |
-| **Rol 1: Ingeniero/a de Hardware y Sensores** | *[Nombre Integrante 1]* | *[Matrícula 1]* | Acondicionamiento de señales analógicas (Divisor resistivo), conexionado eléctrico, aislamiento galvánico de potencia y muestreo ADC en ESP32. |
-| **Rol 2: Ingeniero/a de Comunicaciones e Infraestructura** | *[Nombre Integrante 2]* | *[Matrícula 2]* | Esquema y serialización de telemetría JSON, seguridad del Broker Mosquitto (ACL y autenticación), gestión resiliente no bloqueante de red. |
-| **Rol 3: Ingeniero/a de Software y Orquestación** | *[Nombre Integrante 3]* | *[Matrícula 3]* | Flujos de control en Node-RED, interfaz visual interactiva en Node-RED Dashboard y sistema de alertas críticas a Discord/Telegram con memoria antispam. |
-| **Rol 4: Ingeniero/a de Integración y Calidad (QA / Testing & Field Test)** | **Kevin Ramiro / [Tu Nombre]** | **[Tu Matrícula]** | Pruebas de estrés y forzamiento físico, validación de lazo cerrado sin nube (resiliencia offline), análisis de fallos, logs seriales y documentación técnica del repositorio. |
+| **Rol 1: Ingeniero/a de Hardware y Sensores** | *Juan Daniel Muñoz Azpeitia* | *230110520* | Acondicionamiento de señales analógicas (Divisor resistivo), conexionado eléctrico, aislamiento galvánico de potencia y muestreo ADC en ESP32. |
+| **Rol 2: Ingeniero/a de Comunicaciones e Infraestructura** | *Sebastian López Aguas* | *230110557* | Esquema y serialización de telemetría JSON, seguridad del Broker Mosquitto (ACL y autenticación), gestión resiliente no bloqueante de red. |
+| **Rol 3: Ingeniero/a de Software y Orquestación** | *Jorge Salvador Vazquez Garcia* | *230110516* | Flujos de control en Node-RED, interfaz visual interactiva en Node-RED Dashboard y sistema de alertas críticas a Discord/Telegram con memoria antispam. |
+| **Rol 4: Ingeniero/a de Integración y Calidad (QA / Testing & Field Test)** | *Kevin de Jesús Ramírez López* | *230110634* | Pruebas de estrés y forzamiento físico, validación de lazo cerrado sin nube (resiliencia offline), análisis de fallos, logs seriales y documentación técnica del repositorio. |
 
 ---
 
