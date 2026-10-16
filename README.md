@@ -81,17 +81,17 @@ graph TD
     end
 
     %% Relaciones
-    MQ7 -->|0 - 5V Analógico| DIVISOR
-    DIVISOR -->|0 - 3.3V (GPIO 34)| ESP32
-    ESP32 -->|Control Digital (GPIO 26)| RELE
-    RELE -->|Contacto Seco NO / COM| VENTILADOR
-    FLYBACK -.->|Antiparalelo| VENTILADOR
+    MQ7 -->|"0 a 5V Analógico"| DIVISOR
+    DIVISOR -->|"0 a 3.3V (GPIO 34)"| ESP32
+    ESP32 -->|"Control Digital (GPIO 26)"| RELE
+    RELE -->|"Contacto Seco NO / COM"| VENTILADOR
+    FLYBACK -.->|"Antiparalelo"| VENTILADOR
 
-    ESP32 <-->|Wi-Fi 802.11 b/g/n| WIFI
-    WIFI <-->|TCP/IP Port 1883| MOSQUITTO
-    MOSQUITTO -->|Suscripción Local| NODERED
-    NODERED -->|Renderizado Web| DASHBOARD
-    NODERED -->|HTTP POST Alerta Crítica > 60%| DISCORD
+    ESP32 <-->|"Wi-Fi 802.11 b/g/n"| WIFI
+    WIFI <-->|"TCP/IP Puerto 1883"| MOSQUITTO
+    MOSQUITTO -->|"Suscripción Local"| NODERED
+    NODERED -->|"Renderizado Web"| DASHBOARD
+    NODERED -->|"HTTP POST Alerta Crítica > 60%"| DISCORD
 ```
 
 ---

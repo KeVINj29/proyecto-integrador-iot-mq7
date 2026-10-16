@@ -87,27 +87,27 @@ graph TD
     end
 
     %% Conexiones Alimentacion Logica
-    F5V -->|5V| VIN_ESP
-    F5V -->|5V| MQ7
-    F5V -->|5V| VCC_R
-    F5V -->|GND Común Lógico| GND_ESP
+    F5V -->|"5V"| VIN_ESP
+    F5V -->|"5V"| MQ7
+    F5V -->|"5V"| VCC_R
+    F5V -->|"GND Común Lógico"| GND_ESP
     GND_ESP --- GND_R
     GND_ESP --- R2
 
     %% Divisor de Tension Sensor
-    MQ7 -->|Salida AOUT (0-5V)| R1
+    MQ7 -->|"Salida AOUT (0 a 5V)"| R1
     R1 --> GPIO34
     GPIO34 --- R2
     R2 --- GND_ESP
 
     %% Control de Relevador
-    GPIO26 -->|Señal de Disparo Lógica Inversa| IN_R
+    GPIO26 -->|"Señal de Disparo Lógica Inversa"| IN_R
 
     %% Circuito de Potencia 12V (Aislado)
-    F12V -->|+12V| COM_R
+    F12V -->|"+12V"| COM_R
     NO_R --> MOTOR
-    MOTOR -->|Retorno 12V| F12V
-    DIODO -.->|Cátodo a +12V / Ánodo a Retorno| MOTOR
+    MOTOR -->|"Retorno 12V"| F12V
+    DIODO -.->|"Cátodo a +12V / Ánodo a Retorno"| MOTOR
 ```
 
 ---
