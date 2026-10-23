@@ -4,6 +4,18 @@
 **Docente:** Andrés Salomón Enríquez Ochoa  
 **Sistema:** Prototipo IoT de Automatización en Lazo Cerrado para Monóxido de Carbono (CO)
 
+## 0. Correspondencia con el firmware actual
+
+El firmware validado se encuentra en [`firmware_esp32/codigo_esp32.ino`](../firmware_esp32/codigo_esp32.ino). Su comportamiento actual es local:
+
+* Lee el nodo del divisor en **GPIO 34** con resolución ADC de 12 bits y atenuación `ADC_11db`.
+* Promedia 20 lecturas, separadas por 10 ms, para reducir variaciones instantáneas.
+* Convierte la lectura ADC a una escala lineal de 0 a 100 % y calcula el voltaje estimado con una referencia de 3.3 V.
+* Activa el relevador en **LOW** cuando la escala alcanza 35 % o más y lo desactiva en **HIGH** cuando baja a 25 % o menos.
+* Inicializa el relevador apagado y reporta por el monitor serial a 115200 baudios.
+
+La escala de porcentaje es una referencia de control del prototipo; no es una medición calibrada en ppm de CO. El firmware actual no implementa Wi-Fi ni MQTT. El flujo de Node-RED documentado en [`nodered/flows.json`](../nodered/flows.json) requiere una versión conectada que publique el payload JSON definido en el README principal.
+
 ---
 
 ## 1. Justificación y Cálculo del Acondicionamiento de Señal (Sensor MQ-7)
