@@ -98,7 +98,7 @@ graph TD
 
 ## Formato del Payload de Telemetría (JSON)
 
-El ESP32 empaqueta y publica cada 2 segundos hacia el tópico `planta/seguridad/co` el siguiente formato serializado:
+El ESP32 Empaqueta y publica cada 2 segundos hacia el tópico `planta/seguridad/co` el siguiente formato serializado:
 
 ```json
 {
