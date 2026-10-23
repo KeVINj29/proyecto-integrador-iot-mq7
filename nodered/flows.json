@@ -1,309 +1,123 @@
-[
-    {
-        "id": "tab_closed_loop_co",
-        "type": "tab",
-        "label": "Planta Industrial - Control CO",
-        "disabled": false,
-        "info": "Flujo de control, orquestación, telemetría y alertas para el Proyecto Integrador IoT (Docente: Andrés Salomón Enríquez Ochoa)."
-    },
-    {
-        "id": "mqtt_broker_config",
-        "type": "mqtt-broker",
-        "name": "Mosquitto Local Raspberry Pi",
-        "broker": "localhost",
-        "port": "1883",
-        "clientid": "NodeRED_Orchestrator_CO",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "autoUnsubscribe": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
-    },
-    {
-        "id": "ui_tab_co",
-        "type": "ui_tab",
-        "name": "Monitoreo Planta CO",
-        "icon": "dashboard",
-        "order": 1,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "ui_group_telemetria",
-        "type": "ui_group",
-        "name": "Telemetría en Tiempo Real",
-        "tab": "ui_tab_co",
-        "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "ui_group_actuador",
-        "type": "ui_group",
-        "name": "Control de Actuación & Planta",
-        "tab": "ui_tab_co",
-        "order": 2,
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "ui_group_grafico",
-        "type": "ui_group",
-        "name": "Histórico de Concentración de CO",
-        "tab": "ui_tab_co",
-        "order": 3,
-        "disp": true,
-        "width": "12",
-        "collapse": false
-    },
-    {
-        "id": "node_mqtt_in",
-        "type": "mqtt in",
-        "z": "tab_closed_loop_co",
-        "name": "Suscripción Telemetría CO",
-        "topic": "planta/seguridad/co",
-        "qos": "1",
-        "datatype": "json",
-        "broker": "mqtt_broker_config",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 160,
-        "y": 240,
-        "wires": [
-            [
-                "node_parser_metricas",
-                "node_evaluador_alerta"
-            ]
-        ]
-    },
-    {
-        "id": "node_parser_metricas",
-        "type": "function",
-        "z": "tab_closed_loop_co",
-        "name": "Desempaquetar Métricas UI",
-        "func": "// Validación y formateo de datos para el Dashboard\nvar payload = msg.payload;\n\nvar msgGauge = { payload: parseFloat(payload.co_pct) || 0 };\nvar msgRaw = { payload: \"ADC Raw: \" + (payload.adc_raw || 0) + \" | RSSI: \" + (payload.wifi_rssi || 0) + \" dBm\" };\nvar msgActuador = {\n    payload: payload.actuador === \"ENCENDIDO\",\n    color: payload.actuador === \"ENCENDIDO\" ? \"#d9534f\" : \"#5cb85c\",\n    text: payload.actuador\n};\nvar msgEstado = {\n    payload: payload.alerta_critica ? \"⚠️ PELIGRO CRÍTICO CO\" : (payload.actuador === \"ENCENDIDO\" ? \"EXTRAYENDO GAS\" : \"ATMÓSFERA SEGURA\")\n};\n\nreturn [msgGauge, msgActuador, msgRaw, msgEstado];",
-        "outputs": 4,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 420,
-        "y": 180,
-        "wires": [
-            [
-                "ui_gauge_co",
-                "ui_chart_co"
-            ],
-            [
-                "ui_led_actuador"
-            ],
-            [
-                "ui_text_adc"
-            ],
-            [
-                "ui_text_estado_planta"
-            ]
-        ]
-    },
-    {
-        "id": "ui_gauge_co",
-        "type": "ui_gauge",
-        "z": "tab_closed_loop_co",
-        "name": "Nivel de CO (%)",
-        "group": "ui_group_telemetria",
-        "order": 1,
-        "width": "6",
-        "height": "4",
-        "gtype": "gage",
-        "title": "Concentración Monóxido de Carbono",
-        "label": "%",
-        "format": "{{value}} %",
-        "min": 0,
-        "max": "100",
-        "colors": [
-            "#5cb85c",
-            "#f0ad4e",
-            "#d9534f"
+{
+  "format": "layers-model",
+  "generatedBy": "keras v3.13.2",
+  "convertedBy": "TensorFlow.js Converter v4.17.0",
+  "modelTopology": {
+    "keras_version": "3.13.2",
+    "backend": "tensorflow",
+    "model_config": {
+      "class_name": "Sequential",
+      "config": {
+        "name": "sequential",
+        "trainable": true,
+        "dtype": {
+          "module": "keras",
+          "class_name": "DTypePolicy",
+          "config": {
+            "name": "float32"
+          },
+          "registered_name": null
+        },
+        "layers": [
+          {
+            "class_name": "InputLayer",
+            "config": {
+              "batchInputShape": [null, 1],
+              "dtype": "float32",
+              "sparse": false,
+              "ragged": false,
+              "name": "input_layer",
+              "optional": false
+            }
+          },
+          {
+            "class_name": "Dense",
+            "config": {
+              "name": "dense",
+              "trainable": true,
+              "dtype": {
+                "module": "keras",
+                "class_name": "DTypePolicy",
+                "config": {
+                  "name": "float32"
+                },
+                "registered_name": null
+              },
+              "units": 1,
+              "activation": "linear",
+              "use_bias": true,
+              "kernel_initializer": {
+                "module": "keras.initializers",
+                "class_name": "GlorotUniform",
+                "config": {
+                  "seed": null
+                },
+                "registered_name": null
+              },
+              "bias_initializer": {
+                "module": "keras.initializers",
+                "class_name": "Zeros",
+                "config": {},
+                "registered_name": null
+              },
+              "kernel_regularizer": null,
+              "bias_regularizer": null,
+              "kernel_constraint": null,
+              "bias_constraint": null,
+              "quantization_config": null
+            }
+          }
         ],
-        "seg1": "25",
-        "seg2": "60",
-        "className": "",
-        "x": 690,
-        "y": 120,
-        "wires": []
+        "build_input_shape": [null, 1]
+      }
     },
-    {
-        "id": "ui_chart_co",
-        "type": "ui_chart",
-        "z": "tab_closed_loop_co",
-        "name": "Gráfica Temporal CO",
-        "group": "ui_group_grafico",
-        "order": 1,
-        "width": "12",
-        "height": "5",
-        "label": "Curva de Concentración vs Tiempo (Lazo Cerrado)",
-        "chartType": "line",
-        "legend": "false",
-        "xformat": "HH:mm:ss",
-        "interpolate": "linear",
-        "nodata": "Esperando paquetes de telemetría MQTT...",
-        "dot": false,
-        "ymin": "0",
-        "ymax": "100",
-        "removeOlder": "15",
-        "removeOlderPoints": "",
-        "removeOlderUnit": "60",
-        "cutout": 0,
-        "useOneColor": false,
-        "useUTC": false,
-        "colors": [
-            "#1f77b4",
-            "#aec7e8",
-            "#ff7f0e",
-            "#2ca02c",
-            "#98df8a",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "outputs": 1,
-        "useDifferentColor": false,
-        "className": "",
-        "x": 710,
-        "y": 160,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ui_led_actuador",
-        "type": "ui_text",
-        "z": "tab_closed_loop_co",
-        "group": "ui_group_actuador",
-        "order": 1,
-        "width": "6",
-        "height": "2",
-        "name": "Indicador Relevador",
-        "label": "Estado Extractor (GPIO 26):",
-        "format": "<b style='color: {{msg.color}}; font-size: 1.3em;'>{{msg.text}}</b>",
-        "layout": "row-spread",
-        "className": "",
-        "x": 710,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "ui_text_adc",
-        "type": "ui_text",
-        "z": "tab_closed_loop_co",
-        "group": "ui_group_telemetria",
-        "order": 2,
-        "width": "6",
-        "height": "1",
-        "name": "Diagnóstico ADC/RSSI",
-        "label": "Hardware Status:",
-        "format": "{{msg.payload}}",
-        "layout": "row-spread",
-        "className": "",
-        "x": 720,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "ui_text_estado_planta",
-        "type": "ui_text",
-        "z": "tab_closed_loop_co",
-        "group": "ui_group_actuador",
-        "order": 2,
-        "width": "6",
-        "height": "1",
-        "name": "Estado Lazo de Control",
-        "label": "Condición Actual:",
-        "format": "<b>{{msg.payload}}</b>",
-        "layout": "row-spread",
-        "className": "",
-        "x": 720,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "node_evaluador_alerta",
-        "type": "function",
-        "z": "tab_closed_loop_co",
-        "name": "Control Anti-Spam y Generador de Alerta",
-        "func": "// =========================================================================\n// EVALUACIÓN DE ALERTA CRÍTICA CON RETENCIÓN DE ESTADO (ANTI-SPAM)\n// =========================================================================\nvar data = msg.payload;\nvar coPct = parseFloat(data.co_pct) || 0;\nvar ahora = Date.now();\n\n// Obtener estado anterior persistido en el contexto del nodo\nvar ultimaAlertaTimestamp = context.get('ultimaAlertaTimestamp') || 0;\nvar alertaPreviamenteActiva = context.get('alertaPreviamenteActiva') || false;\n\n// Ventana mínima de repetición antispam: 60 segundos (60,000 ms)\nvar VENTANA_ANTISPAM_MS = 60000;\nvar UMBRAL_CRITICO = 60.0;\n\nif (coPct > UMBRAL_CRITICO) {\n    // Condición de disparo: o es la primera vez que supera el umbral, o venció la ventana de antispam\n    if (!alertaPreviamenteActiva || (ahora - ultimaAlertaTimestamp > VENTANA_ANTISPAM_MS)) {\n        context.set('ultimaAlertaTimestamp', ahora);\n        context.set('alertaPreviamenteActiva', true);\n\n        var timestampStr = new Date().toLocaleString(\"es-MX\", { timeZone: \"America/Hermosillo\" });\n\n        // Construcción de Payload enriquecido para Discord Webhook\n        var discordPayload = {\n            content: \"🚨 **ALERTA CRÍTICA DE MONÓXIDO DE CARBONO (CO) DETECTADA** 🚨\",\n            embeds: [\n                {\n                    title: \"⚠️ CONDICIÓN DE RIESGO INDUSTRIAL EN PLANTA\",\n                    description: \"Se ha rebasado el umbral seguro de CO (> 60.0%). El sistema de control local ha activado automáticamente el extractor de extracción forzada por relevador óptico.\",\n                    color: 14431525, // Rojo alerta (#dc3545)\n                    fields: [\n                        {\n                            name: \"📊 Concentración de CO Medida\",\n                            value: \"**\" + coPct.toFixed(2) + \" %** (ADC Raw: \" + data.adc_raw + \")\",\n                            inline: true\n                        },\n                        {\n                            name: \"⚙️ Estado del Extractor (Relevador)\",\n                            value: \"**\" + data.actuador + \"** (GPIO 26 Activo)\",\n                            inline: true\n                        },\n                        {\n                            name: \"🕒 Estampa de Tiempo\",\n                            value: timestampStr,\n                            inline: false\n                        },\n                        {\n                            name: \"👨‍💻 Equipo Responsable (Proyecto Integrador IoT)\",\n                            value: \"• **Rol 1 (Hardware & Sensores):** Juan Daniel Muñoz Azpeitia - Mat: 230110520\\n• **Rol 2 (Comms & Infraestructura):** Sebastian López Aguas - Mat: 230110557\\n• **Rol 3 (Software & Orquestación):** Jorge Salvador Vazquez Garcia - Mat: 230110516\\n• **Rol 4 (Integración & Calidad / QA):** Kevin de Jesús Ramírez López - Mat: 230110634\",\n                            inline: false\n                        }\n                    ],\n                    footer: {\n                        text: \"Docente: Andrés Salomón Enríquez Ochoa | Materia: Internet de las Cosas\"\n                    }\n                }\n            ]\n        };\n\n        msg.payload = discordPayload;\n        msg.headers = { 'Content-Type': 'application/json' };\n        return msg;\n    }\n} else {\n    // Si la concentración ya bajó a zona segura, reseteamos la bandera de estado\n    if (alertaPreviamenteActiva && coPct <= 25.0) {\n        context.set('alertaPreviamenteActiva', false);\n        node.log(\"CO normalizado por debajo de 25%. Sistema antispam rearmado.\");\n    }\n}\n\nreturn null; // Si no cumple criterios, no emite mensaje a la red",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 460,
-        "y": 380,
-        "wires": [
-            [
-                "node_http_discord"
-            ]
-        ]
-    },
-    {
-        "id": "node_http_discord",
-        "type": "http request",
-        "z": "tab_closed_loop_co",
-        "name": "Disparo Webhook Discord / Telegram",
-        "method": "POST",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID_HERE/YOUR_WEBHOOK_TOKEN_HERE",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [],
-        "x": 780,
-        "y": 380,
-        "wires": [
-            [
-                "node_debug_alertas"
-            ]
-        ]
-    },
-    {
-        "id": "node_debug_alertas",
-        "type": "debug",
-        "z": "tab_closed_loop_co",
-        "name": "Log Respuesta Webhook",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1050,
-        "y": 380,
-        "wires": []
+    "training_config": {
+      "loss": "mean_squared_error",
+      "loss_weights": null,
+      "metrics": null,
+      "weighted_metrics": null,
+      "run_eagerly": false,
+      "steps_per_execution": 1,
+      "jit_compile": false,
+      "optimizer_config": {
+        "class_name": "Adam",
+        "config": {
+          "name": "adam",
+          "learning_rate": 0.10000000149011612,
+          "weight_decay": null,
+          "clipnorm": null,
+          "global_clipnorm": null,
+          "clipvalue": null,
+          "use_ema": false,
+          "ema_momentum": 0.99,
+          "ema_overwrite_frequency": null,
+          "loss_scale_factor": null,
+          "gradient_accumulation_steps": null,
+          "beta_1": 0.9,
+          "beta_2": 0.999,
+          "epsilon": 1e-07,
+          "amsgrad": false
+        }
+      }
     }
-]
+  },
+  "weightsManifest": [
+    {
+      "paths": [
+        "group1-shard1of1.bin"
+      ],
+      "weights": [
+        {
+          "name": "dense/kernel",
+          "shape": [1, 1],
+          "dtype": "float32"
+        },
+        {
+          "name": "dense/bias",
+          "shape": [1],
+          "dtype": "float32"
+        }
+      ]
+    }
+  ]
+}
